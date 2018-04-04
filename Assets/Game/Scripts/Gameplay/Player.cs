@@ -5,14 +5,17 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public PlayerControl m_PlayerControl;
+    public PlayerCamera m_PlayerCamera;
 
     void Start()
     {
         m_PlayerControl.Initialize();
+        m_PlayerCamera.Initialize(transform);
     }
 
     void Update()
     {
         m_PlayerControl.Update(transform);
+        m_PlayerCamera.Update();
     }
 }

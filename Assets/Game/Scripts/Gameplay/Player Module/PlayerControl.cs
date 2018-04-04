@@ -7,11 +7,10 @@ public class PlayerControl
     [SerializeField]
     private float m_speed = 10;
     [SerializeField]
-    private float m_rotationSpeed = 10;
+    private float m_rotationSpeed = 100;
 
     internal void Initialize()
     {
-        
     }
 
     internal void Update(Transform transform)

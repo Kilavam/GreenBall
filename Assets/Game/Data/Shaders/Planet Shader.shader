@@ -47,8 +47,8 @@
                         
             _Border.a = (1 - ((b * 2) - 1) * ((b * 2) - 1)) * _Border.a;
             fixed4 color = ((1 - b) * _Bot + b * _Top) * (1 - _Border.a) + (_Border.a * _Border);
-            color = lerp(_Top, color, step(t, _Cut + _Blend / 2)); // This is an IF
-            color = lerp(_Bot, color, step(_Cut - _Blend / 2, t)); // An other one
+            color = lerp(_Top, color, step(t, _Cut + _Blend / 2)); // A > B ? A : B
+            color = lerp(_Bot, color, step(_Cut - _Blend / 2, t)); // Another one
             o.Albedo = color.rgb;
 
 			// Metallic and smoothness come from slider variables
