@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        m_PlayerControl.Initialize();
+        m_PlayerControl.Initialize(transform);
         m_PlayerCamera.Initialize(transform);
     }
 

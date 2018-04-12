@@ -79,11 +79,12 @@ public class PlayerCamera
 
     public void Reset()
     {
+        if (m_target == null) return;
+
         CalculateOffset();
         CalculateTargetPosition();
 
         m_camera.transform.position = m_position;
         m_camera.transform.rotation = m_rotation;
     }
-
 }
