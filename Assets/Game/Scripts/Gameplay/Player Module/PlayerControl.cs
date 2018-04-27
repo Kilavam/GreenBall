@@ -6,13 +6,11 @@ public class PlayerControl
 {
     [SerializeField]
     private float m_speed = 10;
-    [SerializeField]
-    private float m_rotationSpeed = 100;
 
-    private Vector3 m_lookAt;
-    private Vector3 m_foward;
-    private Vector3 m_right;
-    private Vector3 m_up;
+    //private Vector3 m_lookAt;
+    //private Vector3 m_foward;
+    //private Vector3 m_right;
+    //private Vector3 m_up;
 
     public void Initialize(Transform transform)
     {
@@ -22,25 +20,33 @@ public class PlayerControl
         transform.up = transform.position.normalized;
         transform.position = transform.up * Game.PlanetRadius;
         
-        m_foward = transform.forward;
-        m_right = transform.right;
-        m_up = transform.up;
+        //m_foward = transform.forward;
+        //m_right = transform.right;
+        //m_up = transform.up;
 
-        m_lookAt = m_foward;
+        //m_lookAt = m_foward;
     }
 
     public void Update(Transform transform)
     {
         Vector2 moveInput = GetMovementDirection();
-        Vector3 direction = (moveInput.x * m_right + moveInput.y * m_foward).normalized;
+        if(moveInput.sqrMagnitude > 0)
+        {
+            Vector3 direction = (moveInput.x * transform.right + moveInput.y * transform.forward).normalized;
+            transform.position += direction * m_speed * Time.deltaTime;
+        }
         
-        transform.position += direction * m_speed * Time.deltaTime;
-        // transform.Rotate(Vector3.up, horizontal * m_rotationSpeed * Time.deltaTime);
+        //Vector2 lookAtInput = GetLookAtDirection();
+        //if(lookAtInput.sqrMagnitude > 0)
+        //{
+        //    Vector3 lookAt = (lookAtInput.x * Vector3.right + lookAtInput.y * Vector3.forward).normalized;
+        //    transform.Rotate(Vector3.up, Vector3.SignedAngle(transform.forward, lookAt, Vector3.up));
+        //}
     }
 
     private Vector2 GetMovementDirection()
     {
-        float forward = Input.GetAxis("MoveFoward");
+        float forward = Input.GetAxis("MoveForward");
         float right = Input.GetAxis("MoveRight");
         return new Vector2(right, forward);
     }
@@ -48,7 +54,7 @@ public class PlayerControl
     private Vector2 GetLookAtDirection()
     {
         float forward = Input.GetAxis("LookForward");
-        float right = Input.GetAxis("LookRgiht");
+        float right = Input.GetAxis("LookRight");
         return new Vector2(right, forward);
     }
 }

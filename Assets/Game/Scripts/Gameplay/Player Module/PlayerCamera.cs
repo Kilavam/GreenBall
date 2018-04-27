@@ -38,6 +38,7 @@ public class PlayerCamera
 
     public void Initialize(Transform target = null)
     {
+        m_target = target;
         m_offset = Vector3.zero;
         m_position = Vector3.zero;
         m_rotation = Quaternion.identity;
