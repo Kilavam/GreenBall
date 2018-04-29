@@ -27,13 +27,22 @@ public class PlayerControl
         //m_lookAt = m_foward;
     }
 
+    Quaternion m_position = Quaternion.identity;
+
     public void Update(Transform transform)
     {
         Vector2 moveInput = GetMovementDirection();
         if(moveInput.sqrMagnitude > 0)
         {
             Vector3 direction = (moveInput.x * transform.right + moveInput.y * transform.forward).normalized;
-            transform.position += direction * m_speed * Time.deltaTime;
+            Vector3 rotAxis = Vector3.Cross(transform.up, direction);
+            m_position = m_position * Quaternion.AngleAxis(m_speed * Time.deltaTime, rotAxis);
+            
+            Debug.DrawLine(transform.position, transform.position + rotAxis, Color.red);
+            Debug.DrawLine(transform.position, transform.position + direction, Color.cyan);
+
+            transform.position = (m_position * Vector3.up).normalized * Game.PlanetRadius;
+            transform.rotation = m_position;
         }
         
         //Vector2 lookAtInput = GetLookAtDirection();

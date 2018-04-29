@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerCamera
 {
     [SerializeField]
-    private Camera m_camera;
+    private Camera m_camera = null;
 
     [Header("Settings")]
     [SerializeField]
@@ -75,7 +75,7 @@ public class PlayerCamera
         m_camera.transform.position = Vector3.Lerp(m_camera.transform.position, m_position, m_positionSpeed);
 
         Vector3 lookAt = m_target.position - m_camera.transform.position;
-        m_camera.transform.rotation = Quaternion.Slerp(m_camera.transform.rotation, Quaternion.LookRotation(lookAt), m_roationSpeed);
+        m_camera.transform.rotation = Quaternion.Slerp(m_camera.transform.rotation, Quaternion.LookRotation(lookAt, m_target.transform.up), m_roationSpeed);
     }
 
     public void Reset()
