@@ -43,11 +43,16 @@ public class PlayerCamera
         m_position = Vector3.zero;
         m_rotation = Quaternion.identity;
 
+        if (m_camera == null) m_camera = Camera.main;
+
         Reset();
     }
 
-    public void Update()
+    Quaternion m_playerRot = Quaternion.identity;
+
+    public void Update(Quaternion targetRot)
     {
+        m_playerRot = targetRot;
         CalculateOffset();
         CalculateTargetPosition();
         LerpToTarget();
@@ -63,19 +68,19 @@ public class PlayerCamera
     {
         if (m_target == null) return;
 
-        Vector3 worldOffset = m_target.TransformVector(m_offset);
+        Vector3 worldOffset = m_playerRot * m_offset;
         m_position = m_target.position + worldOffset;
-        m_rotation = Quaternion.LookRotation(-worldOffset);
+        m_rotation = Quaternion.LookRotation(-worldOffset, m_playerRot * Vector3.up);
     }
 
     private void LerpToTarget()
     {
         if (m_target == null) return;
 
-        m_camera.transform.position = Vector3.Lerp(m_camera.transform.position, m_position, m_positionSpeed);
+        m_camera.transform.position = Vector3.Lerp(m_camera.transform.position, m_position, m_positionSpeed * 10 * Time.deltaTime);
 
         Vector3 lookAt = m_target.position - m_camera.transform.position;
-        m_camera.transform.rotation = Quaternion.Slerp(m_camera.transform.rotation, Quaternion.LookRotation(lookAt, m_target.transform.up), m_roationSpeed);
+        m_camera.transform.rotation = Quaternion.Slerp(m_camera.transform.rotation, Quaternion.LookRotation(lookAt, m_target.transform.up), m_roationSpeed * 10 * Time.deltaTime);
     }
 
     public void Reset()

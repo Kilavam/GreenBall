@@ -319,8 +319,8 @@ MonoBehaviour:
     m_camera: {fileID: 0}
     m_angle: 45
     m_distance: 7.5
-    m_positionSpeed: 1
-    m_roationSpeed: 1
+    m_positionSpeed: 0.5
+    m_roationSpeed: 0.5
 --- !u!136 &136695982892027026
 CapsuleCollider:
   m_ObjectHideFlags: 1
